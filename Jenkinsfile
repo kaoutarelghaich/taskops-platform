@@ -40,12 +40,14 @@ pipeline{
           message "Select to approve deployment to environment"
           ok "Approve"
           parameters {
-            choice(name: 'ENV', choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
+            choice(name: 'ENV1', choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
+            choice(name: "ENV2", choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
           }
         }
       steps {
         script {
-          gv.deployApp(params.ENV)
+          gv.deployApp(params.ENV1)
+          gv.deployApp(params.ENV2)
         }
       }     
     }
