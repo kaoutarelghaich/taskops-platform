@@ -30,6 +30,7 @@ pipeline{
       }
       steps {
         script {
+          env.ENV = input message: "Select the env to deploy to", ok: "Done", parameters:[choice(name:'Test', choices: ['main', 'dev'])]
           gv.testApp()
         }
       }      
@@ -46,8 +47,8 @@ pipeline{
         }
       steps {
         script {
-          gv.deployApp(params.ENV1)
-          gv.deployApp(params.ENV2)
+          gv.deployApp(${ENV1})
+          gv.deployApp(${ENV2})
         }
       }     
     }
