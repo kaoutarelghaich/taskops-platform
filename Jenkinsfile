@@ -1,6 +1,4 @@
 pipeline{
-  
-  tools{}
 
   agent any
   parameters {
