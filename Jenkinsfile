@@ -47,8 +47,8 @@ pipeline{
         }
       steps {
         script {
-          gv.deployApp(${ENV1})
-          gv.deployApp(${ENV2})
+          gv.deployApp(env.ENV1)
+          gv.deployApp(env.ENV2)
         }
       }     
     }
