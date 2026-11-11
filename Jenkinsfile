@@ -17,7 +17,9 @@ pipeline{
     
     stage ("build") {
       steps {
-        gv.buildApp()
+        script {
+          gv.buildApp()
+        }
       }
     }
     
@@ -27,14 +29,18 @@ pipeline{
         expression { return !params.SKIP_TESTS }
       }
       steps {
-        gv.testApp()
+        script {
+          gv.testApp()
+        }
       }      
     }
     
     stage ("deploy") {
       
       steps {
-        gv.deployApp(params.ENV)
+        script {
+          gv.deployApp(params.ENV)
+        }
       }     
     }
   }
