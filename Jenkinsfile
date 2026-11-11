@@ -38,10 +38,10 @@ pipeline{
               usernameVariable: 'USER',
               passwordVariable: 'TOKEN'
             )
-          ]
-          )
-          sh 'echo $TOKEN | docker login -u $USER --password-stdin'
-          sh 'docker push koukidevops/taskops-api:1.0'
+          ]) {
+            sh 'set +x; printf "%s" "$TOKEN" | docker login -u "$USER" --password-stdin'
+            sh 'docker push koukidevops/taskops-api:1.0'
+          }
         }
       }
     }
