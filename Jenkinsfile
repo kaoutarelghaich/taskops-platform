@@ -1,5 +1,7 @@
 pipeline{
   
+  tools{}
+
   agent any
   parameters {
     string(name: 'ENV', defaultValue: 'dev', description: 'Environment to deploy to')
@@ -9,11 +11,20 @@ pipeline{
   stages {
     stage ("load script") {
       steps {
+        sh '''
+            python3 -m pip install build
+            python3 -m build
+        '''
         script {
           gv = load "script.groovy"
         }
       }
     }
+
+    stage ("Archive") {
+      steps {
+        archiveArtifacts artifacts: '**/dist/*.whl', allowEmptyArchive: true
+      }
     
     stage ("build") {
       steps {
