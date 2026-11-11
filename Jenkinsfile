@@ -7,10 +7,17 @@ pipeline{
     booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip tests during build')
   }
   stages {
+    stage ("load script") {
+      steps {
+        script {
+          gv = load "script.groovy"
+        }
+      }
+    }
     
     stage ("build") {
       steps {
-        echo "building the app"
+        gv.buildApp()
       }
     }
     
@@ -20,15 +27,14 @@ pipeline{
         expression { return !params.SKIP_TESTS }
       }
       steps {
-        echo "testing the app"
+        gv.testApp()
       }      
     }
     
     stage ("deploy") {
       
       steps {
-        echo "deploying the app"
-        echo "Deploying to environment: ${params.ENV}"
+        gv.deployApp(params.ENV)
       }     
     }
   }
