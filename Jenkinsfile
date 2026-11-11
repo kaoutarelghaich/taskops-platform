@@ -9,9 +9,6 @@ pipeline{
   stages {
     
     stage ("build") {
-      when {
-        branch "main" 
-      }
       steps {
         echo "building the app"
       }
