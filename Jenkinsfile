@@ -28,6 +28,23 @@ pipeline{
         }
       }
     }
+
+    stage ("push image") {
+      steps {
+        scripts {
+          withCredentials ([
+            usernamePassword(
+              credentialsId: 'docker-hub',
+              usernameVariable: 'USER',
+              passwordVariable: 'TOKEN'
+            )
+          ]
+          )
+          sh 'echo $TOKEN | docker login -u $USER --password-stdin'
+          sh 'docker push koukidevops/taskops-api:1.0'
+        }
+      }
+    }
     
     stage ("test") {
       
