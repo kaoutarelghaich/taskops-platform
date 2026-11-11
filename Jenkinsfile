@@ -9,10 +9,6 @@ pipeline{
   stages {
     stage ("load script") {
       steps {
-        sh '''
-            python3 -m pip install build
-            python3 -m build
-        '''
         script {
           gv = load "script.groovy"
         }
@@ -24,10 +20,11 @@ pipeline{
         archiveArtifacts artifacts: '**/dist/*.whl', allowEmptyArchive: true
       }
     }
-    stage ("build") {
+    stage ("build images") {
       steps {
         script {
-          gv.buildApp()
+          echo 'Building the Docker image'
+          sh 'docker build -t koukidevops/taskops-api:1.0 .'
         }
       }
     }
