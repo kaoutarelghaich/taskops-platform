@@ -25,7 +25,7 @@ pipeline{
       steps {
         archiveArtifacts artifacts: '**/dist/*.whl', allowEmptyArchive: true
       }
-    
+    }
     stage ("build") {
       steps {
         script {
