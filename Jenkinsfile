@@ -40,7 +40,7 @@ pipeline{
           message "Select to approve deployment to environment"
           ok "Approve"
           parameters {
-            choices(name: 'ENV', choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
+            choice(name: 'ENV', choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
           }
         }
       steps {
