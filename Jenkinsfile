@@ -31,7 +31,7 @@ pipeline{
 
     stage ("push image") {
       steps {
-        scripts {
+        script {
           withCredentials ([
             usernamePassword(
               credentialsId: 'docker-hub',
