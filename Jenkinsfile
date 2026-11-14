@@ -23,6 +23,7 @@ pipeline{
       }
     }
 
+    /*
     stage ("build") {
       steps {
         script {
@@ -30,6 +31,7 @@ pipeline{
         }
       }
     }
+    */
     stage ("build images") {
       steps {
         script {
