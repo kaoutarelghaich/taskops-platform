@@ -1,4 +1,5 @@
-.PHONY: install lint format test run docker-build up down helm-lint helm-template
+.PHONY: install lint format test run build docker-build up down helm-lint helm-template
+
 
 IMAGE ?= taskops-api:local
 
@@ -12,6 +13,9 @@ lint:
 format:
 	ruff check --fix .
 	ruff format .
+
+build:
+	python -m build --wheel
 
 test:
 	pytest --cov=app --cov-report=term-missing
