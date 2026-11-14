@@ -26,7 +26,7 @@ pipeline{
     stage ("build") {
       steps {
         script {
-          build()
+          buildApp()
         }
       }
     }
