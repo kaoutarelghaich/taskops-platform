@@ -35,7 +35,7 @@ pipeline{
     stage ("build images") {
       steps {
         script {
-          buildImage 'docker push koukidevops/taskops-api:1.0'
+          buildImage 'koukidevops/taskops-api:1.0'
         }
       }
     }
@@ -43,7 +43,7 @@ pipeline{
     stage ("push image") {
       steps {
         script {
-          pushImage 'docker push koukidevops/taskops-api:1.0'
+          pushImage 'koukidevops/taskops-api:1.0'
         }
       }
     }
