@@ -1,11 +1,11 @@
+#!/usr/bin/env groovy
+
+@Library('jenkins-shared-library') _
+
 pipeline{
 
   agent any
-  parameters {
-    string(name: 'ENV', defaultValue: 'dev', description: 'Environment to deploy to')
-    choice(name: 'ACTION', choices: ['build', 'test', 'deploy'], description: 'Action to perform')
-    booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip tests during build')
-  }
+  
   stages {
     stage ("load script") {
       steps {
@@ -17,14 +17,23 @@ pipeline{
 
     stage ("Archive") {
       steps {
-        archiveArtifacts artifacts: '**/dist/*.whl', allowEmptyArchive: true
+        script {
+          gv.archiveArtifacts()
+        }
+      }
+    }
+
+    stage ("build") {
+      steps {
+        script {
+          build()
+        }
       }
     }
     stage ("build images") {
       steps {
         script {
-          echo 'Building the Docker image'
-          sh 'docker build -t koukidevops/taskops-api:1.0 .'
+          buildImage()
         }
       }
     }
@@ -32,16 +41,7 @@ pipeline{
     stage ("push image") {
       steps {
         script {
-          withCredentials ([
-            usernamePassword(
-              credentialsId: 'docker-hub',
-              usernameVariable: 'USER',
-              passwordVariable: 'TOKEN'
-            )
-          ]
-          )
-          sh 'echo $TOKEN | docker login -u $USER --password-stdin'
-          sh 'docker push koukidevops/taskops-api:1.0'
+          pushImage()
         }
       }
     }
